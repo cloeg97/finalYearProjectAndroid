@@ -1,7 +1,6 @@
 package project.finalyearapp.Model;
 
 public class User {
-    private String Email;
     private String FirstName;
     private String LastName;
     private String Password;
@@ -21,14 +20,6 @@ public class User {
         //CampanyName = campanyName;
         //Address = address;
         //BankDetails = bankDetails;
-    }
-
-    public String getEmail() {
-        return Email;
-    }
-
-    public void setEmail(String email) {
-        Email = email;
     }
 
     public String getFirstName() {
