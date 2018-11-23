@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -20,6 +21,7 @@ import project.finalyearapp.Model.User;
 public class Register extends AppCompatActivity {
 
     MaterialEditText edtFirstName, edtLastName, edtEmail, edtPassword;
+     EditText EmailView;
     Button btnRegister;
 
     @Override
@@ -29,6 +31,7 @@ public class Register extends AppCompatActivity {
 
         edtFirstName = (MaterialEditText) findViewById(R.id.edtFirstName);
         edtLastName = (MaterialEditText) findViewById(R.id.edtLastName);
+       // EmailView = (EditText) findViewById(R.id.editTextEmail);
         edtEmail = (MaterialEditText) findViewById(R.id.edtEmail);
         edtPassword = (MaterialEditText) findViewById(R.id.edtPassword);
 
@@ -38,8 +41,7 @@ public class Register extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference table_user = database.getReference("User");
 
-        final String email = edtEmail.getText().toString().replaceAll(".","");
-
+       // String email = EmailView.getText().toString().trim();
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,9 +53,14 @@ public class Register extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         //Check if already a user
+                        //im unsure if this runs twice, i think it does, it registers the user and then the data changes
+                        // and it retriggers which gives the error toast
+                        //String email = EmailView.getText().toString().trim();
+                        String email = edtEmail.getText().toString().trim().replace('.', ' ');
                         if(dataSnapshot.child(email).exists()){
+
                             mDialog.dismiss();
-                            Toast.makeText(Register.this, "Email already registered", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Register.this, "Email already  registered: " + email  , Toast.LENGTH_SHORT).show();
                         }
                         else {
                             mDialog.dismiss();

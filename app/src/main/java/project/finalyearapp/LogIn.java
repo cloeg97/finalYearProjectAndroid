@@ -37,7 +37,7 @@ public class LogIn extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference table_user = database.getReference("User");
 
-        final String email = edtEmail.getText().toString().replaceAll(".","");
+        final String email = edtEmail.getText().toString().replace('.', ' ');
 
         System.out.println(email);
 
@@ -52,6 +52,7 @@ public class LogIn extends AppCompatActivity {
                 table_user.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        String email = edtEmail.getText().toString().replace('.', ' ');
                         //Check if user doesn't exist in the database
                         if(dataSnapshot.child(email).exists()) {
                             mDialog.dismiss();

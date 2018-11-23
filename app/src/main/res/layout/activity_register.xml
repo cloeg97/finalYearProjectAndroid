@@ -45,6 +45,15 @@
             app:met_singleLineEllipsis="true"
             />
 
+        <!--<EditText
+            android:id="@+id/editTextEmail"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:ems="10"
+            android:hint="Email"
+            android:inputType="textEmailAddress" />
+            -->
+
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/edtEmail"
             android:hint="Email"
