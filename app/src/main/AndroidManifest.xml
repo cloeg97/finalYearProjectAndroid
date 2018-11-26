@@ -20,10 +20,10 @@
         </activity>
         <activity android:name=".LogIn" />
         <activity android:name=".Register" />
-        <activity
-            android:name=".Welcome"
-            android:label="@string/title_activity_welcome"
-            android:theme="@style/AppTheme"></activity>
+        <activity android:name=".Welcome" />
+        <activity android:name=".Create" />
+        <activity android:name=".View" />
+        <activity android:name=".Request"></activity>
     </application>
 
 </manifest>
