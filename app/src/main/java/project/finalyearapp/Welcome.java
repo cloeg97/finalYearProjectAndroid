@@ -30,7 +30,7 @@ public class Welcome extends AppCompatActivity {
         btnMvView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent mvView = new Intent(Welcome.this, View.class);
+                Intent mvView = new Intent(Welcome.this, project.finalyearapp.View.class);
                 startActivity(mvView);
             }
         });

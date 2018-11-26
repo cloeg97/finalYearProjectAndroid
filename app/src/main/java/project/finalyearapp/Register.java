@@ -1,6 +1,7 @@
 package project.finalyearapp;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -68,6 +69,8 @@ public class Register extends AppCompatActivity {
                             table_user.child(email).setValue(user);
                             Toast.makeText(Register.this, "Register Successful!", Toast.LENGTH_SHORT).show();
                             finish();
+                            Intent mvWelcome = new Intent(Register.this, Welcome.class);
+                            startActivity(mvWelcome);
                         }
                     }
 

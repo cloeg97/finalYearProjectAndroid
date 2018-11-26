@@ -1,6 +1,7 @@
 package project.finalyearapp;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.ColorSpace;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -60,6 +61,8 @@ public class LogIn extends AppCompatActivity {
                             User user = dataSnapshot.child(email).getValue(User.class);
                             if (edtPassword.getText().toString().equals(user.getPassword())) {
                                 Toast.makeText(LogIn.this, "Log In Successful!", Toast.LENGTH_SHORT).show();
+                                Intent mvWelcome = new Intent(LogIn.this, Welcome.class);
+                                startActivity(mvWelcome);
                             } else {
                                 Toast.makeText(LogIn.this, "Log In failed!!!", Toast.LENGTH_SHORT).show();
                             }
