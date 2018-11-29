@@ -40,7 +40,6 @@ public class LogIn extends AppCompatActivity {
 
         final String email = edtEmail.getText().toString().replace('.', ' ');
 
-        System.out.println(email);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override

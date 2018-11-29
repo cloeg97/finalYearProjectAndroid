@@ -4,41 +4,46 @@ public class User {
     private String FirstName;
     private String LastName;
     private String Password;
-    //private String UserType;
-    //private String CampanyName;
-    //private String Address;
-    //private String BankDetails;
+    private String UserType;
+    private String CompanyName;
+    private String Address;
+    private String BankDetails;
 
     public User() {
     }
 
-    public User(String firstName, String lastName, String password) {
+    public User(String firstName, String lastName, String password, String userType, String companyName, String address, String bankDetails) {
         FirstName = firstName;
         LastName = lastName;
         Password = password;
-        //UserType = userType;
-        //CampanyName = campanyName;
-        //Address = address;
-        //BankDetails = bankDetails;
+        UserType = userType;
+        CompanyName = companyName;
+        Address = address;
+        BankDetails = bankDetails;
     }
 
     public String getFirstName() {
+
         return FirstName;
     }
 
     public void setFirstName(String firstName) {
+
         FirstName = firstName;
     }
 
     public String getLastName() {
+
         return LastName;
     }
 
     public void setLastName(String lastName) {
+
         LastName = lastName;
     }
 
     public String getPassword() {
+
         return Password;
     }
 
@@ -46,7 +51,6 @@ public class User {
         Password = password;
     }
 
-    /*
     public String getUserType() {
         return UserType;
     }
@@ -55,12 +59,12 @@ public class User {
         UserType = userType;
     }
 
-    public String getCampanyName() {
-        return CampanyName;
+    public String getCompanyName() {
+        return CompanyName;
     }
 
-    public void setCampanyName(String campanyName) {
-        CampanyName = campanyName;
+    public void setCompanyName(String companyName) {
+        CompanyName = companyName;
     }
 
     public String getAddress() {
@@ -78,5 +82,4 @@ public class User {
     public void setBankDetails(String bankDetails) {
         BankDetails = bankDetails;
     }
-    */
 }
