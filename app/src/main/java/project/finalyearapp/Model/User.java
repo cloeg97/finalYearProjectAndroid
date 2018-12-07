@@ -1,5 +1,7 @@
 package project.finalyearapp.Model;
 
+import java.util.Currency;
+
 public class User {
     private String FirstName;
     private String LastName;

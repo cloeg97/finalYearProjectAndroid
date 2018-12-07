@@ -18,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
+import project.finalyearapp.Common.Common;
 import project.finalyearapp.Model.User;
 
 public class LogIn extends AppCompatActivity {
@@ -25,20 +26,28 @@ public class LogIn extends AppCompatActivity {
     EditText edtEmail, edtPassword;
     Button btnLogin;
 
+
+    public String getEmail(String e) {
+        edtEmail = (MaterialEditText)findViewById(R.id.edtEmail);
+        String email = edtEmail.getText().toString().replace('.', ' ');
+        return email;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
+        edtEmail = (MaterialEditText)findViewById(R.id.edtEmail);
         edtPassword = (MaterialEditText) findViewById(R.id.edtPassword);
-        edtEmail = (MaterialEditText) findViewById(R.id.edtEmail);
+
         btnLogin = (Button) findViewById(R.id.btnLogin);
 
         //Init Firebase
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference table_user = database.getReference("User");
 
-        final String email = edtEmail.getText().toString().replace('.', ' ');
+        //final String email = edtEmail.getText().toString().replace('.', ' ');
 
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -53,6 +62,7 @@ public class LogIn extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         String email = edtEmail.getText().toString().replace('.', ' ');
+                        getEmail(email);
                         //Check if user doesn't exist in the database
                         if(dataSnapshot.child(email).exists()) {
                             mDialog.dismiss();
@@ -61,7 +71,9 @@ public class LogIn extends AppCompatActivity {
                             if (edtPassword.getText().toString().equals(user.getPassword())) {
                                 Toast.makeText(LogIn.this, "Log In Successful!", Toast.LENGTH_SHORT).show();
                                 Intent mvWelcome = new Intent(LogIn.this, Welcome.class);
+                                Common.currentUser = user;
                                 startActivity(mvWelcome);
+                                finish();
                             } else {
                                 Toast.makeText(LogIn.this, "Log In failed!!!", Toast.LENGTH_SHORT).show();
                             }
