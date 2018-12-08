@@ -76,6 +76,7 @@ public class Register extends AppCompatActivity {
                             Toast.makeText(Register.this, "Register Successful!", Toast.LENGTH_SHORT).show();
                             finish();
                             Intent mvWelcome = new Intent(Register.this, Welcome.class);
+                            mvWelcome.putExtra("Email", email);
                             startActivity(mvWelcome);
                         }
                     }

@@ -71,6 +71,7 @@ public class LogIn extends AppCompatActivity {
                             if (edtPassword.getText().toString().equals(user.getPassword())) {
                                 Toast.makeText(LogIn.this, "Log In Successful!", Toast.LENGTH_SHORT).show();
                                 Intent mvWelcome = new Intent(LogIn.this, Welcome.class);
+                                mvWelcome.putExtra("Email", email );
                                 Common.currentUser = user;
                                 startActivity(mvWelcome);
                                 finish();
