@@ -30,7 +30,7 @@ public class View extends AppCompatActivity {
 
     //Firebase Stuff
     FirebaseDatabase database;
-    DatabaseReference transaction;
+    DatabaseReference start, transaction;
     DatabaseReference user;
 
     RecyclerView recycler_menu;
@@ -40,10 +40,12 @@ public class View extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view);
+        final String passedEmail= getIntent().getStringExtra("Email");
 
         //Init Firebase
         database = FirebaseDatabase.getInstance();
-        transaction = database.getReference("Transaction");
+        start = database.getReference("Transaction");
+        transaction = start.child(passedEmail);
 
         /*
         user = database.getReference("user");

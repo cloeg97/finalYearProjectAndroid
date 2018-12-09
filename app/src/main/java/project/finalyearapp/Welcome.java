@@ -35,8 +35,8 @@ public class Welcome extends AppCompatActivity {
         btnMvCreate = (Button) findViewById(R.id.btnMvCreate);
         btnMvView = (Button) findViewById(R.id.btnMvView);
         btnMvRequest = (Button) findViewById(R.id.btnMvRequest);
-        edtTextEmail = (EditText) findViewById(R.id.editTextEmail);
-        edtTextEmail.setText(passedEmail);
+        //edtTextEmail = (EditText) findViewById(R.id.editTextEmail);
+        //edtTextEmail.setText(passedEmail);
 
         //Init Firebase
         database = FirebaseDatabase.getInstance();
@@ -44,9 +44,9 @@ public class Welcome extends AppCompatActivity {
 
         //Set Name for User
         //View headerView = navigationView.getHeaderView(0);
-        txtFullName = (TextView)findViewById(R.id.txtFullName);
+        //txtFullName = (TextView)findViewById(R.id.txtFullName);
         //String fullName = (Common.currentUser.getFirstName()) + " " + (Common.currentUser.getLastName());
-       // txtFullName.setText(fullName);
+        //txtFullName.setText(fullName);
 
         btnMvCreate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +63,6 @@ public class Welcome extends AppCompatActivity {
             public void onClick(View v) {
                 Intent mvView = new Intent(Welcome.this, project.finalyearapp.View.class);
                 mvView.putExtra("Email", passedEmail);
-
                 startActivity(mvView);
             }
         });

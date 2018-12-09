@@ -20,18 +20,17 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 import project.finalyearapp.Common.Common;
 import project.finalyearapp.Model.Transaction;
 import project.finalyearapp.Model.User;
-import project.finalyearapp.LogIn;
 
 public class Create extends AppCompatActivity {
 
     MaterialEditText edtAmount, edtCurrency, edtReceiver;
     Button btnCreate;
-    Object obj;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create);
+        final String passedEmail= getIntent().getStringExtra("Email");
 
         edtAmount = (MaterialEditText)findViewById(R.id.edtAmount);
         edtCurrency = (MaterialEditText)findViewById(R.id.edtCurrency);
@@ -42,24 +41,8 @@ public class Create extends AppCompatActivity {
         //Init Firebase
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference table_trans = database.getReference("Transaction");
+        final DatabaseReference loc = table_trans.child(passedEmail);
 
-        //Find current user email for transaction key
-        //String name = Common.currentUser.getFirstName();
-        DatabaseReference user = database.getReference("user");
-
-        user.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                for (DataSnapshot objSnapshot: snapshot.getChildren()) {
-                    obj = objSnapshot.getKey();
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError firebaseError) {
-                Log.e("Read failed", firebaseError.getMessage());
-            }
-        });
-        //System.out.println(obj); this == null :(
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,31 +50,14 @@ public class Create extends AppCompatActivity {
                 mDialog.setMessage("Please Wait...");
                 mDialog.show();
 
-                table_trans.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        String email = obj.toString();
-                        if(dataSnapshot.child(email).exists()){
-                            mDialog.dismiss();
-                            Transaction trans = new Transaction(edtAmount.getText().toString(), edtCurrency.getText().toString(), edtReceiver.getText().toString());
-                            table_trans.child(email).setValue(trans);
-                            Toast.makeText(Create.this, "Transaction Created!", Toast.LENGTH_SHORT).show();
-                            finish();
-                            Intent mvWelcome = new Intent(Create.this, Welcome.class);
-                            startActivity(mvWelcome);
-                        }
-                        else {
-                            mDialog.dismiss();
-                            Toast.makeText(Create.this, "Cannot find account " + email  , Toast.LENGTH_SHORT).show();
-
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
+                mDialog.dismiss();
+                Transaction trans = new Transaction(edtAmount.getText().toString(), edtCurrency.getText().toString(), edtReceiver.getText().toString());
+                loc.push().setValue(trans);
+                Toast.makeText(Create.this, "Transaction Created!", Toast.LENGTH_SHORT).show();
+                finish();
+                Intent mvWelcome = new Intent(Create.this, Welcome.class);
+                mvWelcome.putExtra("Email", passedEmail);
+                startActivity(mvWelcome);
             }
         });
     }
