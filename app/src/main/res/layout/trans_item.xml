@@ -42,6 +42,17 @@
             android:layout_alignParentTop="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/trans_shop"
+            android:text="Shop"
+            android:textColor="@android:color/white"
+            android:background="@color/overlayBackground"
+            android:textSize="20sp"
+            android:gravity="left"
+            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>

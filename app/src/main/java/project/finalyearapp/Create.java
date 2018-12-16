@@ -23,7 +23,7 @@ import project.finalyearapp.Model.User;
 
 public class Create extends AppCompatActivity {
 
-    MaterialEditText edtAmount, edtCurrency, edtReceiver;
+    MaterialEditText edtAmount, edtCurrency, edtReceiver, edtShop;
     Button btnCreate;
 
     @Override
@@ -35,6 +35,7 @@ public class Create extends AppCompatActivity {
         edtAmount = (MaterialEditText)findViewById(R.id.edtAmount);
         edtCurrency = (MaterialEditText)findViewById(R.id.edtCurrency);
         edtReceiver = (MaterialEditText)findViewById(R.id.edtReceiver);
+        edtShop = (MaterialEditText)findViewById(R.id.edtShop);
 
         btnCreate = (Button)findViewById(R.id.btnCreate);
 
@@ -50,8 +51,11 @@ public class Create extends AppCompatActivity {
                 mDialog.setMessage("Please Wait...");
                 mDialog.show();
 
+                String receiver = edtReceiver.getText().toString().replace('.', ' ');
+                String shop = edtShop.getText().toString().replace('.', ' ');
+
                 mDialog.dismiss();
-                Transaction trans = new Transaction(edtAmount.getText().toString(), edtCurrency.getText().toString(), edtReceiver.getText().toString());
+                Transaction trans = new Transaction(edtAmount.getText().toString(), edtCurrency.getText().toString(), receiver, shop, false, false, false);
                 loc.push().setValue(trans);
                 Toast.makeText(Create.this, "Transaction Created!", Toast.LENGTH_SHORT).show();
                 finish();

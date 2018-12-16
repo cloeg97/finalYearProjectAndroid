@@ -24,13 +24,14 @@ import java.util.List;
 import project.finalyearapp.Common.Common;
 import project.finalyearapp.Interface.ItemClickListener;
 import project.finalyearapp.Model.Transaction;
+import project.finalyearapp.Model.User;
 import project.finalyearapp.ViewHolder.TransViewHolder;
 
 public class View extends AppCompatActivity {
 
     //Firebase Stuff
     FirebaseDatabase database;
-    DatabaseReference start, transaction;
+    DatabaseReference start, transaction, ref,use;
     DatabaseReference user;
 
     RecyclerView recycler_menu;
@@ -46,23 +47,8 @@ public class View extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         start = database.getReference("Transaction");
         transaction = start.child(passedEmail);
-
-        /*
-        user = database.getReference("user");
-
-        user.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                for (DataSnapshot objSnapshot: snapshot.getChildren()) {
-                    Object obj = objSnapshot.getKey();
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError firebaseError) {
-                Log.e("Read failed", firebaseError.getMessage());
-            }
-        });
-        */
+        ref = database.getReference("User");
+        use = ref.child(passedEmail);
 
         //Load Menu
         recycler_menu = (RecyclerView)findViewById(R.id.recycler_menu);
@@ -77,6 +63,34 @@ public class View extends AppCompatActivity {
         FirebaseRecyclerAdapter<Transaction, TransViewHolder> adapter = new FirebaseRecyclerAdapter<Transaction, TransViewHolder>(Transaction.class, R.layout.trans_item, TransViewHolder.class, transaction) {
             @Override
             protected void populateViewHolder(TransViewHolder viewHolder, Transaction model, int position) {
+                /*if(use.getUserType == "customer"){
+                    if(model.getCustflag() == true) {
+                        viewHolder.txtTransactionA.setText(model.getAmount());
+                        viewHolder.txtTransactionC.setText(model.getCurrency());
+                        viewHolder.txtTransactionR.setText(model.getReceiver());
+                        final Transaction clickItem = model;
+                        viewHolder.setItemClickListener(new ItemClickListener() {
+                            @Override
+                            public void onClick(android.view.View view, int position, boolean isLongClick) {
+                                Toast.makeText(View.this, "" + clickItem.getCurrency(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }
+                else {
+                    if(model.getShopAflag() == true || model.getShopBflag() == true) {
+                        viewHolder.txtTransactionA.setText(model.getAmount());
+                        viewHolder.txtTransactionC.setText(model.getCurrency());
+                        viewHolder.txtTransactionR.setText(model.getReceiver());
+                        final Transaction clickItem = model;
+                        viewHolder.setItemClickListener(new ItemClickListener() {
+                            @Override
+                            public void onClick(android.view.View view, int position, boolean isLongClick) {
+                                Toast.makeText(View.this, "" + clickItem.getCurrency(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }*/
                 viewHolder.txtTransactionA.setText(model.getAmount());
                 viewHolder.txtTransactionC.setText(model.getCurrency());
                 viewHolder.txtTransactionR.setText(model.getReceiver());

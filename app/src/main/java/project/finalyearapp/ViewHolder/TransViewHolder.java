@@ -13,6 +13,7 @@ public class TransViewHolder extends RecyclerView.ViewHolder implements View.OnC
     public TextView txtTransactionA;
     public TextView txtTransactionC;
     public TextView txtTransactionR;
+    public TextView txtTransactionS;
 
     private ItemClickListener itemClickListener;
 
@@ -22,6 +23,7 @@ public class TransViewHolder extends RecyclerView.ViewHolder implements View.OnC
         txtTransactionA = (TextView) itemView.findViewById(R.id.trans_amount);
         txtTransactionC = (TextView) itemView.findViewById(R.id.trans_currency);
         txtTransactionR = (TextView) itemView.findViewById(R.id.trans_receiver);
+        txtTransactionS = (TextView) itemView.findViewById(R.id.trans_shop);
 
         itemView.setOnClickListener(this);
     }
