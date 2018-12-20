@@ -56,6 +56,8 @@ public class View extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recycler_menu.setLayoutManager(layoutManager);
 
+        final String passedUserType= getIntent().getStringExtra("userType");
+
         loadMenu();
     }
 
@@ -63,8 +65,12 @@ public class View extends AppCompatActivity {
         FirebaseRecyclerAdapter<Transaction, TransViewHolder> adapter = new FirebaseRecyclerAdapter<Transaction, TransViewHolder>(Transaction.class, R.layout.trans_item, TransViewHolder.class, transaction) {
             @Override
             protected void populateViewHolder(TransViewHolder viewHolder, Transaction model, int position) {
-                /*if(use.getUserType == "customer"){
-                    if(model.getCustflag() == true) {
+                final String passedUserType= getIntent().getStringExtra("userType");
+                final String passedEmail= getIntent().getStringExtra("Email");
+                final String receiver = model.getReceiver().toString().replace('.', ' ');
+                final String shop = model.getShop().toString().replace('.', ' ');
+                /*if(passedUserType == "customer"){
+                    if (model.getCustflag() == true) {
                         viewHolder.txtTransactionA.setText(model.getAmount());
                         viewHolder.txtTransactionC.setText(model.getCurrency());
                         viewHolder.txtTransactionR.setText(model.getReceiver());
@@ -72,23 +78,25 @@ public class View extends AppCompatActivity {
                         viewHolder.setItemClickListener(new ItemClickListener() {
                             @Override
                             public void onClick(android.view.View view, int position, boolean isLongClick) {
-                                Toast.makeText(View.this, "" + clickItem.getCurrency(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(View.this, "" + clickItem.getShop(), Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
                 }
                 else {
-                    if(model.getShopAflag() == true || model.getShopBflag() == true) {
-                        viewHolder.txtTransactionA.setText(model.getAmount());
-                        viewHolder.txtTransactionC.setText(model.getCurrency());
-                        viewHolder.txtTransactionR.setText(model.getReceiver());
-                        final Transaction clickItem = model;
-                        viewHolder.setItemClickListener(new ItemClickListener() {
-                            @Override
-                            public void onClick(android.view.View view, int position, boolean isLongClick) {
-                                Toast.makeText(View.this, "" + clickItem.getCurrency(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                    if (shop.equalsIgnoreCase(passedEmail)) {
+                        if (model.getCustflag() == true && model.getShopAflag() == true) {
+                            viewHolder.txtTransactionA.setText(model.getAmount());
+                            viewHolder.txtTransactionC.setText(model.getCurrency());
+                            viewHolder.txtTransactionR.setText(model.getReceiver());
+                            final Transaction clickItem = model;
+                            viewHolder.setItemClickListener(new ItemClickListener() {
+                                @Override
+                                public void onClick(android.view.View view, int position, boolean isLongClick) {
+                                    Toast.makeText(View.this, "" + clickItem.getShop(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
                     }
                 }*/
                 viewHolder.txtTransactionA.setText(model.getAmount());
@@ -98,7 +106,7 @@ public class View extends AppCompatActivity {
                 viewHolder.setItemClickListener(new ItemClickListener() {
                     @Override
                     public void onClick(android.view.View view, int position, boolean isLongClick) {
-                        Toast.makeText(View.this, "" + clickItem.getCurrency(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(View.this, "" + clickItem.getShop(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }

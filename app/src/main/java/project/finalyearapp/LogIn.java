@@ -72,6 +72,8 @@ public class LogIn extends AppCompatActivity {
                                 Toast.makeText(LogIn.this, "Log In Successful!", Toast.LENGTH_SHORT).show();
                                 Intent mvWelcome = new Intent(LogIn.this, Welcome.class);
                                 mvWelcome.putExtra("Email", email );
+                                String userType = user.getUserType();
+                                mvWelcome.putExtra( userType, userType);
                                 Common.currentUser = user;
                                 startActivity(mvWelcome);
                                 finish();
