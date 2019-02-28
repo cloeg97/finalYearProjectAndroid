@@ -4,7 +4,8 @@ public class Transaction {
     private String Amount;
     private String Currency;
     private String Receiver;
-    private String Shop;
+    private String ShopA;
+    private String ShopB;
     private Boolean custflag;
     private Boolean shopAflag;
     private Boolean shopBflag;
@@ -12,11 +13,12 @@ public class Transaction {
     public Transaction() {
     }
 
-    public Transaction(String amount, String currency, String receiver, String shop, Boolean custFlag, Boolean shopAFlag, Boolean shopBFlag) {
+    public Transaction(String amount, String currency, String receiver, String shopA, String shopB, Boolean custFlag, Boolean shopAFlag, Boolean shopBFlag) {
         Amount = amount;
         Currency = currency;
         Receiver = receiver;
-        Shop = shop;
+        ShopA = shopA;
+        ShopB = shopB;
         custflag = custFlag;
         shopAflag = shopAFlag;
         shopBflag = shopBFlag;
@@ -46,12 +48,20 @@ public class Transaction {
         Receiver = receiver;
     }
 
-    public String getShop() {
-        return Shop;
+    public String getShopA() {
+        return ShopA;
     }
 
-    public void setShop(String shop) {
-        Shop = shop;
+    public void setShopA(String shopA) {
+        ShopA = shopA;
+    }
+
+    public String getShopB() {
+        return ShopB;
+    }
+
+    public void setShopB(String shopB) {
+        ShopB = shopB;
     }
 
     public Boolean getCustflag() {

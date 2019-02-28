@@ -23,7 +23,7 @@ import project.finalyearapp.Model.User;
 
 public class Create extends AppCompatActivity {
 
-    MaterialEditText edtAmount, edtCurrency, edtReceiver, edtShop;
+    MaterialEditText edtAmount, edtCurrency, edtReceiver, edtShopA, edtShopB;
     Button btnCreate;
 
     @Override
@@ -35,7 +35,7 @@ public class Create extends AppCompatActivity {
         edtAmount = (MaterialEditText)findViewById(R.id.edtAmount);
         edtCurrency = (MaterialEditText)findViewById(R.id.edtCurrency);
         edtReceiver = (MaterialEditText)findViewById(R.id.edtReceiver);
-        edtShop = (MaterialEditText)findViewById(R.id.edtShop);
+        edtShopA = (MaterialEditText)findViewById(R.id.edtShopA);
 
         btnCreate = (Button)findViewById(R.id.btnCreate);
 
@@ -52,10 +52,10 @@ public class Create extends AppCompatActivity {
                 mDialog.show();
 
                 String receiver = edtReceiver.getText().toString().replace('.', ' ');
-                String shop = edtShop.getText().toString().replace('.', ' ');
+                String shopA = edtShopA.getText().toString().replace('.', ' ');
 
                 mDialog.dismiss();
-                Transaction trans = new Transaction(edtAmount.getText().toString(), edtCurrency.getText().toString(), receiver, shop, false, false, false);
+                Transaction trans = new Transaction(edtAmount.getText().toString(), edtCurrency.getText().toString(), receiver, shopA, " ", false, false, false);
                 loc.push().setValue(trans);
                 Toast.makeText(Create.this, "Transaction Created!", Toast.LENGTH_SHORT).show();
                 finish();
