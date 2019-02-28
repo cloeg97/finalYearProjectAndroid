@@ -25,8 +25,6 @@ public class TransViewHolder extends RecyclerView.ViewHolder implements View.OnC
     public TextView txtTransactionA;
     public TextView txtTransactionC;
     public TextView txtTransactionR;
-    //public TextView txtTransactionS;
-    public Button approveBtn;
 
     private ItemClickListener itemClickListener;
 
@@ -36,36 +34,6 @@ public class TransViewHolder extends RecyclerView.ViewHolder implements View.OnC
         txtTransactionA = (TextView) itemView.findViewById(R.id.trans_amount);
         txtTransactionC = (TextView) itemView.findViewById(R.id.trans_currency);
         txtTransactionR = (TextView) itemView.findViewById(R.id.trans_receiver);
-        //txtTransactionS = (TextView) itemView.findViewById(R.id.trans_shop);
-        approveBtn = (Button) itemView.findViewById(R.id.btnApprove);
-
-        approveBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                @SuppressLint("ValidFragment")
-                class FireMissilesDialogFragment extends DialogFragment {
-                    @Override
-                    public Dialog onCreateDialog(Bundle savedInstanceState) {
-                        // Use the Builder class for convenient dialog construction
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setMessage(R.string.dialog_approve)
-                                .setPositiveButton(R.string.dialog_approve, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        System.out.println("Approve button clicked");
-                                    }
-                                })
-                                .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        // User cancelled the dialog
-                                        System.out.println("Cancel approval button clicked");
-                                    }
-                                });
-                        // Create the AlertDialog object and return it
-                        return builder.create();
-                    }
-                }
-            }
-        });
 
         itemView.setOnClickListener(this);
     }
