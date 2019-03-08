@@ -107,20 +107,6 @@ public class Request extends AppCompatActivity {
                                     @Override
                                     public void onClick(View v) {
                                         String newShopB = Write.getText().toString().replace(".", " ");
-                                        start.addListenerForSingleValueEvent(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                                for (DataSnapshot child : dataSnapshot.child(key).getChildren()) {
-
-                                                    //insert additional codes here
-                                                }
-                                            }
-
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                            }
-                                        });
                                         //transaction.child("key").child("shopB").setValue(newShopB);
                                         Toast.makeText(Request.this, "CustB Approval", Toast.LENGTH_SHORT).show();
                                         custDialog.cancel();
