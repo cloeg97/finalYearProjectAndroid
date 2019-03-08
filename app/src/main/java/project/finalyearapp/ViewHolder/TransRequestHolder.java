@@ -20,7 +20,7 @@ public class TransRequestHolder extends RecyclerView.ViewHolder implements View.
     public TextView txtTransactionA;
     public TextView txtTransactionC;
     public TextView txtTransactionR;
-    public Button approveBtn;
+    //public Button approveBtn;
 
     private ItemClickListener itemClickListener;
 
@@ -30,7 +30,7 @@ public class TransRequestHolder extends RecyclerView.ViewHolder implements View.
         txtTransactionA = (TextView) itemView.findViewById(R.id.trans_amount);
         txtTransactionC = (TextView) itemView.findViewById(R.id.trans_currency);
         txtTransactionR = (TextView) itemView.findViewById(R.id.trans_receiver);
-        approveBtn = (Button) itemView.findViewById(R.id.btnApprove);
+        //approveBtn = (Button) itemView.findViewById(R.id.btnApprove);
 
         itemView.setOnClickListener(this);
     }
@@ -42,9 +42,5 @@ public class TransRequestHolder extends RecyclerView.ViewHolder implements View.
     @Override
     public void onClick(View view) {
         itemClickListener.onClick(view, getAdapterPosition(),false);
-    }
-
-    public Button getApproveBtn() {
-        return approveBtn;
     }
 }

@@ -72,7 +72,7 @@ public class View extends AppCompatActivity {
                 final String shopB = model.getShopB().toString().replace(' ', '.');
 
                 //receiver
-                if (passedEmail.equalsIgnoreCase(receiver)) {
+                if (passedEmail.equalsIgnoreCase(model.getReceiver())) {
                     viewHolder.txtTransactionA.setText(model.getAmount());
                     viewHolder.txtTransactionC.setText(model.getCurrency());
                     viewHolder.txtTransactionR.setText(model.getReceiver());
