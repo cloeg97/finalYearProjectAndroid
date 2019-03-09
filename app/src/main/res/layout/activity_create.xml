@@ -61,19 +61,19 @@
             />
 
         <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/edtShop"
-            android:hint="Shop"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColorHint="@android:color/black"
-            android:textColor="@android:color/black"
-            android:textSize="34sp"
-            android:inputType="text"
-            app:met_baseColor="@android:color/black"
-            app:met_floatingLabel="highlight"
-            app:met_primaryColor="@android:color/black"
-            app:met_singleLineEllipsis="true"
-            />
+        android:id="@+id/edtShopA"
+        android:hint="Shop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColorHint="@android:color/black"
+        android:textColor="@android:color/black"
+        android:textSize="34sp"
+        android:inputType="text"
+        app:met_baseColor="@android:color/black"
+        app:met_floatingLabel="highlight"
+        app:met_primaryColor="@android:color/black"
+        app:met_singleLineEllipsis="true"
+        />
 
     </LinearLayout>
 

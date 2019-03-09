@@ -30,7 +30,7 @@ public class Welcome extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         final String passedEmail= getIntent().getStringExtra("Email");
-
+        final String userType = getIntent().getStringExtra("UserType");
 
         btnMvCreate = (Button) findViewById(R.id.btnMvCreate);
         btnMvView = (Button) findViewById(R.id.btnMvView);
@@ -48,6 +48,7 @@ public class Welcome extends AppCompatActivity {
         //String fullName = (Common.currentUser.getFirstName()) + " " + (Common.currentUser.getLastName());
         //txtFullName.setText(fullName);
 
+
         btnMvCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,6 +64,8 @@ public class Welcome extends AppCompatActivity {
             public void onClick(View v) {
                 Intent mvView = new Intent(Welcome.this, project.finalyearapp.View.class);
                 mvView.putExtra("Email", passedEmail);
+                mvView.putExtra("UserType", userType);
+                System.out.println(userType);
                 startActivity(mvView);
             }
         });
@@ -72,7 +75,6 @@ public class Welcome extends AppCompatActivity {
             public void onClick(View v) {
                 Intent mvRequest = new Intent(Welcome.this, Request.class);
                 mvRequest.putExtra("Email", passedEmail);
-
                 startActivity(mvRequest);
             }
         });

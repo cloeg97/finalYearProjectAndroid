@@ -38,6 +38,8 @@ public class LogIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
+        final String passedKey = getIntent().getStringExtra("key");
+
         edtEmail = (MaterialEditText)findViewById(R.id.edtEmail);
         edtPassword = (MaterialEditText) findViewById(R.id.edtPassword);
 
@@ -72,6 +74,9 @@ public class LogIn extends AppCompatActivity {
                                 Toast.makeText(LogIn.this, "Log In Successful!", Toast.LENGTH_SHORT).show();
                                 Intent mvWelcome = new Intent(LogIn.this, Welcome.class);
                                 mvWelcome.putExtra("Email", email );
+                                String userType = user.getUserType();
+                                System.out.println(userType);
+                                mvWelcome.putExtra("UserType", userType);
                                 Common.currentUser = user;
                                 startActivity(mvWelcome);
                                 finish();

@@ -4,22 +4,28 @@ public class Transaction {
     private String Amount;
     private String Currency;
     private String Receiver;
-    private String Shop;
+    private String ShopA;
+    private String ShopB;
     private Boolean custflag;
     private Boolean shopAflag;
     private Boolean shopBflag;
+    private String Key;
+    private String Creator;
 
     public Transaction() {
     }
 
-    public Transaction(String amount, String currency, String receiver, String shop, Boolean custFlag, Boolean shopAFlag, Boolean shopBFlag) {
+    public Transaction(String amount, String currency, String receiver, String shopA, String shopB, Boolean custFlag, Boolean shopAFlag, Boolean shopBFlag, String key, String creator) {
         Amount = amount;
         Currency = currency;
         Receiver = receiver;
-        Shop = shop;
+        ShopA = shopA;
+        ShopB = shopB;
         custflag = custFlag;
         shopAflag = shopAFlag;
         shopBflag = shopBFlag;
+        Key = key;
+        Creator = creator;
     }
 
     public String getAmount() {
@@ -46,12 +52,20 @@ public class Transaction {
         Receiver = receiver;
     }
 
-    public String getShop() {
-        return Shop;
+    public String getShopA() {
+        return ShopA;
     }
 
-    public void setShop(String shop) {
-        Shop = shop;
+    public void setShopA(String shopA) {
+        ShopA = shopA;
+    }
+
+    public String getShopB() {
+        return ShopB;
+    }
+
+    public void setShopB(String shopB) {
+        ShopB = shopB;
     }
 
     public Boolean getCustflag() {
@@ -76,5 +90,21 @@ public class Transaction {
 
     public void setShopBflag(Boolean shopBflag) {
         this.shopBflag = shopBflag;
+    }
+
+    public String getKey() {
+        return Key;
+    }
+
+    public void setKey(String key) {
+        Key = key;
+    }
+
+    public String getCreator() {
+        return Creator;
+    }
+
+    public void setCreator(String creator) {
+        Creator = creator;
     }
 }
