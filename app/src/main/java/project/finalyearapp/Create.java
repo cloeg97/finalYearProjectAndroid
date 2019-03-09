@@ -2,24 +2,17 @@ package project.finalyearapp;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
-import project.finalyearapp.Common.Common;
 import project.finalyearapp.Model.Transaction;
-import project.finalyearapp.Model.User;
 
 public class Create extends AppCompatActivity {
 
@@ -40,7 +33,7 @@ public class Create extends AppCompatActivity {
         btnCreate = (Button)findViewById(R.id.btnCreate);
 
         //Init Firebase
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference table_trans = database.getReference("Transaction");
         final DatabaseReference loc = table_trans.child(passedEmail);
 
@@ -55,8 +48,9 @@ public class Create extends AppCompatActivity {
                 String shopA = edtShopA.getText().toString().replace('.', ' ');
 
                 mDialog.dismiss();
-                Transaction trans = new Transaction(edtAmount.getText().toString(), edtCurrency.getText().toString(), receiver, shopA, " ", false, false, false);
-                loc.push().setValue(trans);
+                final String keyRef = table_trans.push().getKey();
+                Transaction trans = new Transaction(edtAmount.getText().toString(), edtCurrency.getText().toString(), receiver, shopA, " ", false, false, false, keyRef, passedEmail);
+                table_trans.child(keyRef).setValue(trans);
                 Toast.makeText(Create.this, "Transaction Created!", Toast.LENGTH_SHORT).show();
                 finish();
                 Intent mvWelcome = new Intent(Create.this, Welcome.class);

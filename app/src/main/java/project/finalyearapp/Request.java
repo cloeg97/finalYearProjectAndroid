@@ -40,7 +40,7 @@ public class Request extends AppCompatActivity {
 
     //Firebase Stuff
     FirebaseDatabase database;
-    DatabaseReference start, transaction, ref,use, test;
+    DatabaseReference start, transaction, ref,use;
     DatabaseReference user;
 
     RecyclerView recycler_menu;
@@ -53,8 +53,8 @@ public class Request extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request);
 
-        final String passedEmail= getIntent().getStringExtra("Email");
-
+        final String passedEmail = getIntent().getStringExtra("Email");
+        //final String passedUserType= getIntent().getStringExtra("userType");
 
         //Init Firebase
         database = FirebaseDatabase.getInstance();
@@ -64,182 +64,14 @@ public class Request extends AppCompatActivity {
         use = ref.child(passedEmail);
 
         //Load Menu
-        recycler_menu = (RecyclerView)findViewById(R.id.recycler_menu);
+        recycler_menu = findViewById(R.id.recycler_menu);
         recycler_menu.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recycler_menu.setLayoutManager(layoutManager);
 
-        //final String passedUserType= getIntent().getStringExtra("userType");
-
         loadMenu();
     }
 
-    private void loadMenu() {
-        FirebaseRecyclerAdapter<Transaction, TransRequestHolder> adapter = new FirebaseRecyclerAdapter<Transaction, TransRequestHolder>(Transaction.class, R.layout.trans_item, TransRequestHolder.class, transaction) {
-            @Override
-            protected void populateViewHolder(TransRequestHolder viewHolder, final Transaction model, int position) {
-                final String passedUserType= getIntent().getStringExtra("userType");
-                final String passedEmail= getIntent().getStringExtra("Email");
-                final String receiver = model.getReceiver().toString().replace('.', ' ');
-                final String shopA = model.getShopA().toString().replace('.', ' ');
-                //final String shopB = model.getShopB().toString().replace('.', ' ');
-
-                //custB
-                if(passedEmail.equalsIgnoreCase(receiver)) {
-                    if(model.getCustflag() == false) {
-                        viewHolder.txtTransactionA.setText(model.getAmount());
-                        viewHolder.txtTransactionC.setText(model.getCurrency());
-                        viewHolder.txtTransactionR.setText(model.getReceiver());
-                        final Transaction clickItem = model;
-                        viewHolder.setItemClickListener(new ItemClickListener() {
-                            @Override
-                            public void onClick(android.view.View view, int position, boolean isLongClick) {
-                                Toast.makeText(Request.this, "Receiving: " + shopA, Toast.LENGTH_SHORT).show();
-                                custDialog = new Dialog(Request.this);
-                                custDialog.setContentView(R.layout.dialog_template);
-                                final EditText Write = (EditText) custDialog.findViewById((R.id.write));
-                                Button Approve = (Button) custDialog.findViewById(R.id.approve);
-
-                                Write.setEnabled(true);
-                                Approve.setEnabled(true);
-
-                                Approve.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        String newShopB = Write.getText().toString().replace(".", " ");
-                                        //transaction.child("key").child("shopB").setValue(newShopB);
-                                        Toast.makeText(Request.this, "CustB Approval", Toast.LENGTH_SHORT).show();
-                                        custDialog.cancel();
-                                    }
-                                });
-                                custDialog.show();
-                            }
-                        });
-                    }
-                    else {
-                        viewHolder.txtTransactionA.setText(" ");
-                        viewHolder.txtTransactionC.setText(" ");
-                        viewHolder.txtTransactionR.setText(" ");
-                    }
-                }
-                //shopA
-                else if (passedEmail.equalsIgnoreCase(model.getShopA())) {
-                    if(model.getCustflag() == true && model.getShopAflag() == false) {
-                        viewHolder.txtTransactionA.setText(model.getAmount());
-                        viewHolder.txtTransactionC.setText(model.getCurrency());
-                        viewHolder.txtTransactionR.setText(model.getReceiver());
-                        final Transaction clickItem = model;
-                        viewHolder.setItemClickListener(new ItemClickListener() {
-                            @Override
-                            public void onClick(android.view.View view, int position, boolean isLongClick) {
-                                Toast.makeText(Request.this, "Receiving: " + shopA, Toast.LENGTH_SHORT).show();
-                                shopaDialog = new Dialog(Request.this);
-                                shopaDialog.setContentView(R.layout.dialog_template2);
-                                final TextView View = (TextView) shopaDialog.findViewById((R.id.view));
-                                Button Approve = (Button) shopaDialog.findViewById(R.id.approve);
-
-                                View.setEnabled(true);
-                                Approve.setEnabled(true);
-
-                                Approve.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        //transaction.child("key").child("shopAflag").setValue(true);
-                                        Toast.makeText(Request.this, "ShopA Approval", Toast.LENGTH_SHORT).show();
-                                        shopaDialog.cancel();
-                                    }
-                                });
-                                shopaDialog.show();
-                                //customDialog("Transaction Approval", "Are you sure you want to approve this transaction?", "cancel", "okMethod2");
-                            }
-                        });
-                    }
-                    else {
-                        viewHolder.txtTransactionA.setText(" ");
-                        viewHolder.txtTransactionC.setText(" ");
-                        viewHolder.txtTransactionR.setText(" ");
-                    }
-                }
-                //shopB
-                else if (passedEmail.equalsIgnoreCase(model.getShopB())) {
-                    if(model.getShopAflag() == true && model.getShopBflag() == false) {
-                        viewHolder.txtTransactionA.setText(model.getAmount());
-                        viewHolder.txtTransactionC.setText(model.getCurrency());
-                        viewHolder.txtTransactionR.setText(model.getReceiver());
-                        final Transaction clickItem = model;
-                        viewHolder.setItemClickListener(new ItemClickListener() {
-                            @Override
-                            public void onClick(android.view.View view, int position, boolean isLongClick) {
-                                Toast.makeText(Request.this, "Receiving: " + shopA, Toast.LENGTH_SHORT).show();
-                                shopbDialog = new Dialog(Request.this);
-                                shopbDialog.setContentView(R.layout.dialog_template2);
-                                final TextView View = (TextView) shopbDialog.findViewById((R.id.view));
-                                Button Approve = (Button) shopbDialog.findViewById(R.id.approve);
-
-                                View.setEnabled(true);
-                                Approve.setEnabled(true);
-
-                                Approve.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        //transaction.child("key").child("shopBflag").setValue(true);
-                                        Toast.makeText(Request.this, "ShopB Approval", Toast.LENGTH_SHORT).show();
-                                        shopbDialog.cancel();
-                                    }
-                                });
-                                shopbDialog.show();
-                                //customDialog("Transaction Approval", "Are you sure you want to approve this transaction?", "cancel", "okMethod3");
-                            }
-                        });
-                    }
-                    else {
-                        viewHolder.txtTransactionA.setText(" ");
-                        viewHolder.txtTransactionC.setText(" ");
-                        viewHolder.txtTransactionR.setText(" ");
-                    }
-                }
-                else {
-                    viewHolder.txtTransactionA.setText(" ");
-                    viewHolder.txtTransactionC.setText(" ");
-                    viewHolder.txtTransactionR.setText(" ");
-                }
-
-                //original view transition that works
-                /*viewHolder.txtTransactionA.setText(model.getAmount());
-                viewHolder.txtTransactionC.setText(model.getCurrency());
-                viewHolder.txtTransactionR.setText(model.getReceiver());
-                final Transaction clickItem = model;
-                viewHolder.setItemClickListener(new ItemClickListener() {
-                    @Override
-                    public void onClick(android.view.View view, int position, boolean isLongClick) {
-                        Toast.makeText(Request.this, "Receiving: " + shopA + " Collection: " + shopB, Toast.LENGTH_SHORT).show();
-                    }
-                });*/
-                /*viewHolder.getApproveBtn().setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(Request.this, "" + clickItem.getShopAflag(), Toast.LENGTH_SHORT).show();
-                    }
-                });*/
-
-            }
-        };
-        recycler_menu.setAdapter(adapter);
-    }
-}
-
-
-//code for button
-/*
-if custB
-    title, textbox, cancel, okMethod1
-else if shopA
-    title, are you sure, cancel, okMethod2
-else if shopB
-    title, are you sure, cancel, okMethod3
- */
-//old button code
-/*
     private void cancel(){
         Log.d(TAG, "cancelMethod: Called.");
         Toast.makeText(Request.this, "Canceled Approval", Toast.LENGTH_SHORT).show();
@@ -247,22 +79,23 @@ else if shopB
 
     private void okMethod1(){
         Log.d(TAG, "okMethod1: Called.");
-        Toast.makeText(Request.this, "CustB Approval", Toast.LENGTH_SHORT).show();
+        Toast.makeText(Request.this, "Awaiting Approval", Toast.LENGTH_SHORT).show();
     }
 
-    private void okMethod2(){
+    private void okMethod2(final String passedEmail, String key){
         Log.d(TAG, "okMethod2: Called.");
-        //transaction.push().child("shopAflag").setValue(true);
+        start.child(key).child("shopAflag").setValue(true);
         Toast.makeText(Request.this, "ShopA Approval", Toast.LENGTH_SHORT).show();
-
     }
 
-    private void okMethod3(){
+
+    private void okMethod3(final String passedEmail, String key){
         Log.d(TAG, "okMethod3: Called.");
+        start.child(key).child("shopBflag").setValue(true);
         Toast.makeText(Request.this, "ShopB Approval", Toast.LENGTH_SHORT).show();
     }
 
-    public void customDialog(String title, String message, final String cancelMethod, final String okMethod) {
+    public void customDialog(String title, String message, final String cancelMethod, final String okMethod, final String passedEmail, final String key) {
         final android.support.v7.app.AlertDialog.Builder builderSingle = new android.support.v7.app.AlertDialog.Builder(this);
         builderSingle.setIcon(R.drawable.ic_stat_name);
         builderSingle.setTitle(title);
@@ -288,14 +121,132 @@ else if shopB
                             okMethod1();
                         }
                         else if(okMethod.equals("okMethod2")) {
-                            okMethod2();
+                            okMethod2(passedEmail, key);
                         }
                         else {
-                            okMethod3();
+                            okMethod3(passedEmail, key);
                         }
                     }
                 }
         );
         builderSingle.show();
     }
- */
+
+    private void loadMenu() {
+        FirebaseRecyclerAdapter<Transaction, TransRequestHolder> adapter = new FirebaseRecyclerAdapter<Transaction, TransRequestHolder>(Transaction.class, R.layout.trans_item, TransRequestHolder.class, start) {
+            @Override
+            protected void populateViewHolder(TransRequestHolder viewHolder, final Transaction model, int position) {
+                final String passedUserType= getIntent().getStringExtra("userType");
+                final String passedEmail= getIntent().getStringExtra("Email");
+                final String receiver = model.getReceiver().replace('.', ' ');
+                final String shopA = model.getShopA().replace('.', ' ');
+
+                //custB
+                if(passedEmail.equalsIgnoreCase(model.getReceiver()) && model.getCustflag() == false) {
+                    viewHolder.txtTransactionA.setText(model.getAmount());
+                    viewHolder.txtTransactionC.setText(model.getCurrency());
+                    viewHolder.txtTransactionR.setText(model.getReceiver());
+                    final Transaction clickItem = model;
+                    viewHolder.setItemClickListener(new ItemClickListener() {
+                        @Override
+                        public void onClick(android.view.View view, int position, boolean isLongClick) {
+                            Toast.makeText(Request.this, "Receiving: " + shopA, Toast.LENGTH_SHORT).show();
+                            final String key = model.getKey();
+                            custDialog = new Dialog(Request.this);
+                            custDialog.setContentView(R.layout.dialog_template);
+                            final EditText Write = custDialog.findViewById((R.id.write));
+                            Button Approve = custDialog.findViewById(R.id.approve);
+
+                            Write.setEnabled(true);
+                            Approve.setEnabled(true);
+
+                            Approve.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    String newShopB = Write.getText().toString().replace(".", " ");
+                                    start.child(key).child("custflag").setValue(true);
+                                    start.child(key).child("shopB").setValue(newShopB);
+                                    Toast.makeText(Request.this, "CustB Approval", Toast.LENGTH_SHORT).show();
+                                    custDialog.cancel();
+                                }
+                            });
+                            custDialog.show();
+                        }
+                    });
+                }
+                //shopA
+                else if (passedEmail.equalsIgnoreCase(model.getShopA()) && (model.getCustflag() == true && model.getShopAflag() == false)) {
+                    viewHolder.txtTransactionA.setText(model.getAmount());
+                    viewHolder.txtTransactionC.setText(model.getCurrency());
+                    viewHolder.txtTransactionR.setText(model.getReceiver());
+                    final Transaction clickItem = model;
+                    viewHolder.setItemClickListener(new ItemClickListener() {
+                        @Override
+                        public void onClick(android.view.View view, int position, boolean isLongClick) {
+                            Toast.makeText(Request.this, "Receiving: " + shopA, Toast.LENGTH_SHORT).show();
+                            final String key = model.getKey();
+                            //Dialog option number one
+                            customDialog("Transaction Approval", "Are you sure you want to approve this transaction?", "cancel", "okMethod2", passedEmail, key);
+                            //Dialog option number two
+                            /*shopaDialog = new Dialog(Request.this);
+                            shopaDialog.setContentView(R.layout.dialog_template2);
+                            final TextView View = (TextView) shopaDialog.findViewById((R.id.view));
+                            Button Approve = (Button) shopaDialog.findViewById(R.id.approve);
+
+                            View.setEnabled(true);
+                            Approve.setEnabled(true);
+
+                            Approve.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    transaction.child(key).child("shopAflag").setValue(true);
+                                    Toast.makeText(Request.this, "ShopA Approval", Toast.LENGTH_SHORT).show();
+                                    shopaDialog.cancel();
+                                }
+                            });
+                            shopaDialog.show();*/
+                        }
+                    });
+                }
+                //shopB
+                else if (passedEmail.equalsIgnoreCase(model.getShopB()) && (model.getShopAflag() == true && model.getShopBflag() == false)) {
+                    viewHolder.txtTransactionA.setText(model.getAmount());
+                    viewHolder.txtTransactionC.setText(model.getCurrency());
+                    viewHolder.txtTransactionR.setText(model.getReceiver());
+                    final Transaction clickItem = model;
+                    viewHolder.setItemClickListener(new ItemClickListener() {
+                        @Override
+                        public void onClick(android.view.View view, int position, boolean isLongClick) {
+                            Toast.makeText(Request.this, "Receiving: " + shopA, Toast.LENGTH_SHORT).show();
+                            final String key = model.getKey();
+                            //Dialog option number one
+                            customDialog("Transaction Approval", "Are you sure you want to approve this transaction?", "cancel", "okMethod3", passedEmail, key);
+                            //Dialog option number two
+                            /*shopbDialog = new Dialog(Request.this);
+                            shopbDialog.setContentView(R.layout.dialog_template2);
+                            final TextView View = (TextView) shopbDialog.findViewById((R.id.view));
+                            Button Approve = (Button) shopbDialog.findViewById(R.id.approve);
+
+                            View.setEnabled(true);
+                            Approve.setEnabled(true);
+
+                            Approve.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    //transaction.child("key").child("shopBflag").setValue(true);
+                                    Toast.makeText(Request.this, "ShopB Approval", Toast.LENGTH_SHORT).show();
+                                    shopbDialog.cancel();
+                                }
+                            });
+                            shopbDialog.show();*/
+                        }
+                    });
+                }
+                else {
+                    viewHolder.itemView.setVisibility(View.GONE);
+                }
+            }
+        };
+        recycler_menu.setAdapter(adapter);
+    }
+}

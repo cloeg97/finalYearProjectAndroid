@@ -9,11 +9,13 @@ public class Transaction {
     private Boolean custflag;
     private Boolean shopAflag;
     private Boolean shopBflag;
+    private String Key;
+    private String Creator;
 
     public Transaction() {
     }
 
-    public Transaction(String amount, String currency, String receiver, String shopA, String shopB, Boolean custFlag, Boolean shopAFlag, Boolean shopBFlag) {
+    public Transaction(String amount, String currency, String receiver, String shopA, String shopB, Boolean custFlag, Boolean shopAFlag, Boolean shopBFlag, String key, String creator) {
         Amount = amount;
         Currency = currency;
         Receiver = receiver;
@@ -22,6 +24,8 @@ public class Transaction {
         custflag = custFlag;
         shopAflag = shopAFlag;
         shopBflag = shopBFlag;
+        Key = key;
+        Creator = creator;
     }
 
     public String getAmount() {
@@ -86,5 +90,21 @@ public class Transaction {
 
     public void setShopBflag(Boolean shopBflag) {
         this.shopBflag = shopBflag;
+    }
+
+    public String getKey() {
+        return Key;
+    }
+
+    public void setKey(String key) {
+        Key = key;
+    }
+
+    public String getCreator() {
+        return Creator;
+    }
+
+    public void setCreator(String creator) {
+        Creator = creator;
     }
 }

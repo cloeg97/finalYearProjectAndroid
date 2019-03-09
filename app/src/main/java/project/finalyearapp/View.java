@@ -41,7 +41,8 @@ public class View extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view);
-        final String passedEmail= getIntent().getStringExtra("Email");
+        final String passedEmail = getIntent().getStringExtra("Email");
+        final String passedUserType = getIntent().getStringExtra("UserType");
 
         //Init Firebase
         database = FirebaseDatabase.getInstance();
@@ -56,69 +57,89 @@ public class View extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recycler_menu.setLayoutManager(layoutManager);
 
-        final String passedUserType= getIntent().getStringExtra("userType");
-
         loadMenu();
     }
 
     private void loadMenu() {
-        FirebaseRecyclerAdapter<Transaction, TransViewHolder> adapter = new FirebaseRecyclerAdapter<Transaction, TransViewHolder>(Transaction.class, R.layout.trans_item, TransViewHolder.class, transaction) {
+        FirebaseRecyclerAdapter<Transaction, TransViewHolder> adapter = new FirebaseRecyclerAdapter<Transaction, TransViewHolder>(Transaction.class, R.layout.trans_item, TransViewHolder.class, start) {
             @Override
             protected void populateViewHolder(TransViewHolder viewHolder, Transaction model, int position) {
-                final String passedUserType = getIntent().getStringExtra("userType");
+                final String passedUserType = getIntent().getStringExtra("UserType");
                 final String passedEmail = getIntent().getStringExtra("Email");
                 final String receiver = model.getReceiver().toString().replace(' ', '.');
                 final String shopA = model.getShopA().toString().replace(' ', '.');
                 final String shopB = model.getShopB().toString().replace(' ', '.');
 
-                //receiver
-                if (passedEmail.equalsIgnoreCase(model.getReceiver())) {
-                    viewHolder.txtTransactionA.setText(model.getAmount());
-                    viewHolder.txtTransactionC.setText(model.getCurrency());
-                    viewHolder.txtTransactionR.setText(model.getReceiver());
-                    final Transaction clickItem = model;
-                    viewHolder.setItemClickListener(new ItemClickListener() {
-                        @Override
-                        public void onClick(android.view.View view, int position, boolean isLongClick) {
-                            Toast.makeText(View.this, "Receiving: " + shopA + " Collection: " + shopB, Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                System.out.println("Amount: " + model.getAmount());
+                System.out.println("User a customer? " + passedUserType.equalsIgnoreCase("customer"));
+                System.out.println("User the creator? " + passedEmail.equalsIgnoreCase(model.getCreator()));
+                //customer
+                if (passedUserType.equalsIgnoreCase("customer")) {
+                    //creator
+                    if (passedEmail.equalsIgnoreCase(model.getCreator())) {
+                        viewHolder.txtTransactionA.setText(model.getAmount());
+                        viewHolder.txtTransactionC.setText(model.getCurrency());
+                        viewHolder.txtTransactionR.setText(model.getReceiver());
+                        final Transaction clickItem = model;
+                        viewHolder.setItemClickListener(new ItemClickListener() {
+                            @Override
+                            public void onClick(android.view.View view, int position, boolean isLongClick) {
+                                Toast.makeText(View.this, "Receiving: " + shopA + " Collection: " + shopB, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                    //receiver
+                    else if (passedEmail.equalsIgnoreCase(model.getReceiver())) {
+                        viewHolder.txtTransactionA.setText(model.getAmount());
+                        viewHolder.txtTransactionC.setText(model.getCurrency());
+                        viewHolder.txtTransactionR.setText(model.getReceiver());
+                        final Transaction clickItem = model;
+                        viewHolder.setItemClickListener(new ItemClickListener() {
+                            @Override
+                            public void onClick(android.view.View view, int position, boolean isLongClick) {
+                                Toast.makeText(View.this, "Receiving: " + shopA + " Collection: " + shopB, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                    else {
+                        viewHolder.itemView.setVisibility(android.view.View.GONE);
+                    }
                 }
-                //creator
-                /*else if(passedEmail.equalsIgnoreCase(model.getKey()){
-                    show
-                }*/
-                //shopA
-                else if(passedEmail.equalsIgnoreCase(model.getShopA())) {
-                    viewHolder.txtTransactionA.setText(model.getAmount());
-                    viewHolder.txtTransactionC.setText(model.getCurrency());
-                    viewHolder.txtTransactionR.setText(model.getReceiver());
-                    final Transaction clickItem = model;
-                    viewHolder.setItemClickListener(new ItemClickListener() {
-                        @Override
-                        public void onClick(android.view.View view, int position, boolean isLongClick) {
-                            Toast.makeText(View.this, "Receiving: " + shopA + " Collection: " + shopB, Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-                //shopB
-                else if(passedEmail.equalsIgnoreCase(model.getShopB())) {
-                    viewHolder.txtTransactionA.setText(model.getAmount());
-                    viewHolder.txtTransactionC.setText(model.getCurrency());
-                    viewHolder.txtTransactionR.setText(model.getReceiver());
-                    final Transaction clickItem = model;
-                    viewHolder.setItemClickListener(new ItemClickListener() {
-                        @Override
-                        public void onClick(android.view.View view, int position, boolean isLongClick) {
-                            Toast.makeText(View.this, "Receiving: " + shopA + " Collection: " + shopB, Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                //shop owner
+                else if (passedUserType.equalsIgnoreCase("shopowner")) {
+                    //shopA
+                    if(passedEmail.equalsIgnoreCase(model.getCreator()) || passedEmail.equalsIgnoreCase(model.getShopA())) {
+                        viewHolder.txtTransactionA.setText(model.getAmount());
+                        viewHolder.txtTransactionC.setText(model.getCurrency());
+                        viewHolder.txtTransactionR.setText(model.getReceiver());
+                        final Transaction clickItem = model;
+                        viewHolder.setItemClickListener(new ItemClickListener() {
+                            @Override
+                            public void onClick(android.view.View view, int position, boolean isLongClick) {
+                                Toast.makeText(View.this, "Receiving: " + shopA + " Collection: " + shopB, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                    //shopB
+                    else if(passedEmail.equalsIgnoreCase(model.getCreator()) || passedEmail.equalsIgnoreCase(model.getShopB())) {
+                        viewHolder.txtTransactionA.setText(model.getAmount());
+                        viewHolder.txtTransactionC.setText(model.getCurrency());
+                        viewHolder.txtTransactionR.setText(model.getReceiver());
+                        final Transaction clickItem = model;
+                        viewHolder.setItemClickListener(new ItemClickListener() {
+                            @Override
+                            public void onClick(android.view.View view, int position, boolean isLongClick) {
+                                Toast.makeText(View.this, "Receiving: " + shopA + " Collection: " + shopB, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                    else {
+                        viewHolder.itemView.setVisibility(android.view.View.GONE);
+                    }
                 }
                 //none
                 else {
-                    viewHolder.txtTransactionA.setText(" ");
-                    viewHolder.txtTransactionC.setText(" ");
-                    viewHolder.txtTransactionR.setText(" ");
+                    viewHolder.itemView.setVisibility(android.view.View.GONE);
                 }
 
                 //original working view transaction with no conditionals
