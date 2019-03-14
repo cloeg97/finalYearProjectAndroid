@@ -29,7 +29,7 @@ import static project.finalyearapp.Price.findPrice;
 
 public class Create extends AppCompatActivity {
 
-    MaterialEditText edtAmount, edtCurrency, edtReceiver, edtShopA, edtShopB;
+    MaterialEditText edtAmount, edtCurrentCurrency, edtReceiver, edtShopA, edtShopB;
     Button btnCreate;
     TextView textAfterconv;
     //usually the product id for testing would be BTC-EUR for the buy, but the sandbox has one BTC worth 9billion EUR so we have to USE USD
@@ -41,7 +41,7 @@ public class Create extends AppCompatActivity {
         final String passedEmail= getIntent().getStringExtra("Email");
 
         edtAmount = (MaterialEditText)findViewById(R.id.edtAmount);
-        edtCurrency = (MaterialEditText)findViewById(R.id.edtCurrency);
+        edtCurrentCurrency = (MaterialEditText)findViewById(R.id.edtCurrentCurrency);
         edtReceiver = (MaterialEditText)findViewById(R.id.edtReceiver);
         edtShopA = (MaterialEditText)findViewById(R.id.edtShopA);
 
@@ -156,7 +156,7 @@ public class Create extends AppCompatActivity {
 
                 mDialog.dismiss();
                 final String keyRef = table_trans.push().getKey();
-                Transaction trans = new Transaction(edtAmount.getText().toString(), edtCurrency.getText().toString(), receiver, shopA, " ", false, false, false, keyRef, passedEmail);
+                Transaction trans = new Transaction(edtAmount.getText().toString(), edtCurrentCurrency.getText().toString(), receiver, shopA, " ", false, false, false, keyRef, passedEmail);
                 table_trans.child(keyRef).setValue(trans);
                 Toast.makeText(Create.this, "Transaction Created!", Toast.LENGTH_SHORT).show();
                 finish();
