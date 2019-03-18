@@ -79,16 +79,6 @@ public class Order {
 
         String status = con.getResponseMessage();
         if (status.equals("OK")) {
-
-            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            String inputLine;
-            StringBuffer content = new StringBuffer();
-            while ((inputLine = in.readLine()) != null) {
-                content.append(inputLine);
-            }
-            in.close();
-            con.disconnect();
-
         } else {
             throw new RuntimeException("Something went wrong. Response from server: " + status);
         }
