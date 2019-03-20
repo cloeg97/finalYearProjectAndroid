@@ -97,16 +97,40 @@ public class Create extends AppCompatActivity {
         });
         threadBuy.start();*/
 
+        //get current price, multiply by funds, take away 3% under a certain amrount... do conversion, sell currency
+        double currentPrice= 0;
+        final DecimalFormat f = new DecimalFormat("##.00");
+        try {
+            Double btcUSDPrice= Double.parseDouble(findPrice("BTC-USD"));
+            //3838- price on 14th/03/19
+            btcUSDPrice=3838.00;
+            System.out.println("The price of BTC-USD "+ btcUSDPrice);
 
+
+            Double btcEURPrice= Double.parseDouble(findPrice("BTC-EUR"));
+            System.out.println("The price of BTC-EUR "+ btcEURPrice);
+            //3396- price on 14th/03/19
+            btcEURPrice=3396.00;
+
+            currentPrice=(btcUSDPrice/btcEURPrice);
+            System.out.println("Exchange rate "+ f.format(currentPrice));
+
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         try {
 
             textAfterconv.setText(findPrice(product_id));
             //sandbox override
-            textAfterconv.setText("1.14");
+            textAfterconv.setText(f.format(currentPrice));
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        final double finalCurrentPrice = currentPrice;
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,26 +143,21 @@ public class Create extends AppCompatActivity {
                 String shopA = edtShopA.getText().toString().replace('.', ' ');
 
                 try {
-                    OrderMe(edtAmount.getText().toString(),"buy", product_id);
+                    Double tobuydouble= Double.parseDouble(edtAmount.getText().toString());
+                   String tobuy=f.format(tobuydouble);
+                    OrderMe(tobuy,"buy", product_id);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
-                //get current price, multiply by funds, take away 3% under a certain amrount... do conversion, sell currency
-                double currentPrice= 0;
-                try {
-                    currentPrice = Double.parseDouble(findPrice(product_id));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+
                 //override for sandbox,
-                DecimalFormat f = new DecimalFormat("##.00");
-                currentPrice=1.14;
-                double toSell= Double.parseDouble(edtAmount.getText().toString());
-                System.out.println("To sell before 1.08: "+ toSell);
 
-                toSell=Double.parseDouble(f.format(toSell*currentPrice));
-                System.out.println("To sell after 1.08: "+ toSell);
+                double toSell= Double.parseDouble(edtAmount.getText().toString());
+                System.out.println("To sell before "+ finalCurrentPrice +": "+ toSell);
+
+                toSell=Double.parseDouble(f.format(toSell* finalCurrentPrice));
+                System.out.println("To sell after  "+ finalCurrentPrice +": "+ toSell);
 
                 System.out.println("To sell before .97: "+ toSell);
                 toSell=Math.round(toSell*0.97);
