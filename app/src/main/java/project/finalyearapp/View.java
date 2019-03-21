@@ -47,9 +47,9 @@ public class View extends AppCompatActivity {
         //Init Firebase
         database = FirebaseDatabase.getInstance();
         start = database.getReference("Transaction");
-        transaction = start.child(passedEmail);
+        //transaction = start.child(passedEmail);
         ref = database.getReference("User");
-        use = ref.child(passedEmail);
+        //use = ref.child(passedEmail);
 
         //Load Menu
         recycler_menu = (RecyclerView)findViewById(R.id.recycler_menu);
@@ -70,9 +70,6 @@ public class View extends AppCompatActivity {
                 final String shopA = model.getShopA().toString().replace(' ', '.');
                 final String shopB = model.getShopB().toString().replace(' ', '.');
 
-                System.out.println("Amount: " + model.getAmount());
-                System.out.println("User a customer? " + passedUserType.equalsIgnoreCase("customer"));
-                System.out.println("User the creator? " + passedEmail.equalsIgnoreCase(model.getCreator()));
                 //customer
                 if (passedUserType.equalsIgnoreCase("customer")) {
                     //creator

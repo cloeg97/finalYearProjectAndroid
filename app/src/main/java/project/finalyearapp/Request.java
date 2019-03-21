@@ -59,9 +59,9 @@ public class Request extends AppCompatActivity {
         //Init Firebase
         database = FirebaseDatabase.getInstance();
         start = database.getReference("Transaction");
-        transaction = start.child(passedEmail);
+        //transaction = start.child(passedEmail);
         ref = database.getReference("User");
-        use = ref.child(passedEmail);
+        //use = ref.child(passedEmail);
 
         //Load Menu
         recycler_menu = findViewById(R.id.recycler_menu);
