@@ -1,5 +1,8 @@
 package project.finalyearapp;
 
+/*
+ * This class enable price checking to be done via the Coinbase Pro API
+ */
 
 import android.annotation.TargetApi;
 import android.os.Build;
