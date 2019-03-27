@@ -1,5 +1,8 @@
 package project.finalyearapp;
-
+/*
+* This function enables the user to creat a transaction which specifies how much money they want to send and in what currency.
+* It then specifies to whom the money will be sent to and what shop will the money be distributed to.
+* */
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;

@@ -1,5 +1,7 @@
 package project.finalyearapp;
-
+/*
+* This class enable buy and sell orders to be made via the Coinbase Pro API
+ */
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.util.Log;
