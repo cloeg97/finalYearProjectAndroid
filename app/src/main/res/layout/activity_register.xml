@@ -160,7 +160,7 @@
             android:layout_margin="8dp"
             android:text="Register"
             android:textColor="@android:color/white"
-            app:backgroundTint="@color/btnRegister"
+            app:fButtonColor="@color/btnRegister"
             app:cornerRadius="4dp"
             app:shadowColor="@android:color/darker_gray"
             app:shadowEnabled="true"
